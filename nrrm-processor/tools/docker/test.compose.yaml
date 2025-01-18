@@ -1,0 +1,49 @@
+# docker-compose -f tools/docker/test.compose.yaml up --build
+# docker-compose -f tools/docker/test.compose.yaml down -v # -v removes the volume contains the db (ephemeral db)
+services:
+  backend:
+    build: 
+      context: ../../
+      dockerfile: tools/docker/test.Dockerfile
+    container_name: test-nrrmprocessor
+    environment:
+      - DATABASE_HOST=dev-nrrmdata-db
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_USER=${DB_USER} 
+      - DATABASE_PASSWORD=${DB_PASSWORD} 
+      - DATABASE_NAME=${DB_NAME} 
+    networks:
+      - dev_network
+    volumes:
+      - ../../:/app
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+  db:
+    image: postgres:14.13-alpine3.20
+    container_name: dev-nrrmdata-db
+    expose:
+      - "${DB_PORT}"
+    environment:
+      - POSTGRES_USER=${DB_USER} 
+      - POSTGRES_PASSWORD=${DB_PASSWORD} 
+      - POSTGRES_DB=${DB_NAME} 
+      - PGPORT=${DB_PORT}
+    volumes: 
+      - dev-db-data:/var/lib/postgresql/data
+      - ../../app/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d nrrmdata"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+volumes:
+  dev-db-data:
+
+networks:
+  dev_network:

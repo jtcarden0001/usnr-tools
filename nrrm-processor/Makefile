@@ -1,7 +1,6 @@
 # test
 test:
-	docker build -t test-image -f ./tools/docker/test.Dockerfile .
-	docker run --env-file ./tools/docker/dev.env test-image
+	docker compose -f ./tools/docker/test.compose.yaml --env-file ./tools/docker/dev.env up --build -d
 
 # run
 dev-up:

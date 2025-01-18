@@ -15,7 +15,7 @@ CREATE TABLE sailor_current (
 -- holds all sailors ever reported with snapshots to capture changes
 CREATE TABLE sailor_historical (
   dodid bigint,
-  snapshot_datetime timestampz NOT NULL DEFAULT now(),
+  snapshot_datetime timestamptz NOT NULL DEFAULT now(),
   last_name varchar NOT NULL,
   first_name varchar NOT NULL,
   rank varchar NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE sailor_gain (
 );
 
 CREATE TABLE unit_metric_snapshot (
-    snapshot_datetime timestampz DEFAULT now(),
+    snapshot_datetime timestamptz DEFAULT now(),
     cai_count int NOT NULL,
     local_count int NOT NULL,
     cai_deployability_fd_count int NOT NULL,
