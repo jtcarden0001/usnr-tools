@@ -7,11 +7,11 @@ services:
       dockerfile: tools/docker/test.Dockerfile
     container_name: test-nrrmprocessor
     environment:
-      - DATABASE_HOST=dev-nrrmdata-db
-      - DATABASE_PORT=${DB_PORT}
-      - DATABASE_USER=${DB_USER} 
-      - DATABASE_PASSWORD=${DB_PASSWORD} 
-      - DATABASE_NAME=${DB_NAME} 
+      - DB_HOST=dev-nrrmdata-db
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER} 
+      - DB_PASSWORD=${DB_PASSWORD} 
+      - DB_NAME=${DB_NAME} 
     networks:
       - dev_network
     volumes:

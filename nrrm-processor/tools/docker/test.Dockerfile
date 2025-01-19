@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN ls -al
 RUN echo $PW
 COPY . .
-RUN pytest tests/
+CMD ["pytest", "app/tests", "-s"]

@@ -48,9 +48,11 @@ class UnitMetricSnapshot:
     cai_deployability_fd_count: int
     cai_deployability_pd_count: int
     cai_deployability_nd_count: int
+    cai_deployability_mob_count: int
     local_deployability_fd_count: int
     local_deployability_pd_count: int
     local_deployability_nd_count: int
+    local_deployability_mob_count: int
     cai_medical_fq_count: int
     cai_medical_pq_count: int
     cai_medical_nq_count: int
