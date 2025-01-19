@@ -5,7 +5,7 @@ from ..store import get_latest_unit_metrics, get_all_sailor_gains, get_all_sailo
 from ..models import Sailor
 import random
 
-def test_hello_world():
+def test_hello_store():
     assert 1 == 1
 
 def test_import_sailors():

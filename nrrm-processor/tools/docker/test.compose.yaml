@@ -11,7 +11,10 @@ services:
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER} 
       - DB_PASSWORD=${DB_PASSWORD} 
-      - DB_NAME=${DB_NAME} 
+      - DB_NAME=${DB_NAME}
+      - DIR_TO_WATCH=${DIR_TO_WATCH}
+      - REPORT_FILE_NAME=${REPORT_FILE_NAME}
+      - ARCHIVE_FIR=${ARCHIVE_DIR}
     networks:
       - dev_network
     volumes:

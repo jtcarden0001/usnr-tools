@@ -7,7 +7,7 @@ import pandas as pd
 def start():
     while True:
         dir_to_watch = os.getenv('DIR_TO_WATCH')
-        file_name = os.getenv('NRRM_UMUIC_REPORT_FILE_NAME')
+        file_name = os.getenv('REPORT_FILE_NAME')
         file_path = os.path.join(dir_to_watch, file_name)
         # if file does not exist, sleep for 1 minute
         if not os.path.exists(file_path):
