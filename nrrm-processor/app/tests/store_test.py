@@ -4,6 +4,7 @@ from ..app import import_sailors
 from ..store import get_latest_unit_metrics, get_all_sailor_gains, get_all_sailor_losses
 from ..models import Sailor
 import random
+import os
 
 def test_hello_store():
     assert 1 == 1
