@@ -3,10 +3,11 @@ test:
 	docker compose -f ./tools/docker/test.compose.yaml --env-file ./tools/docker/dev.env up --build
 
 test-clean:
+	docker stop test-nrrmprocessor
+	docker rm test-nrrmprocessor
 	docker stop dev-nrrmdata-db
 	docker rm dev-nrrmdata-db
 	docker volume rm docker_dev-db-data
-	docker rm test-nrrmprocessor
 
 # run
 dev-up:
