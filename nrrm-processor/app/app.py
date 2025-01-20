@@ -3,6 +3,7 @@ import time
 from .store import import_sailors  # Replace 'some_module' with the actual module name
 from .models import Sailor
 import pandas as pd
+import openpyxl
 
 def start():
     while True:
@@ -11,8 +12,8 @@ def start():
         file_path = os.path.join(dir_to_watch, file_name)
         # if file does not exist, sleep for 1 minute
         if not os.path.exists(file_path):
-            time.sleep(60)
-            continue
+            raise FileNotFoundError(f"The file {file_path} does not exist. Current working directory: {os.getcwd()}, contents: {os.listdir()}")
+
         
         # if file exists, process the excel file to get the sailors from the excel rows
         sailors = process_report(file_path)
@@ -22,6 +23,9 @@ def start():
 
         # move the file to the archive directory
         archive_dir = os.getenv('ARCHIVE_DIR')
+        # if the archive directory does not exist, create it
+        if not os.path.exists(archive_dir):
+            os.mkdir(archive_dir)
         timestamp = time.strftime('%Y%m%d%H%M%S')
         archive_file_name = f'{timestamp}_{file_name}'
         archive_file_path = os.path.join(archive_dir, archive_file_name)
@@ -41,8 +45,8 @@ def process_report(file_path: str) -> list[Sailor]:
             truic=row['Truic'],
             umuic=row['Umuic'],
             deployability=row['Deployability'],
-            medical_readiness=convert_medical_readiness(row['Imr Status']), # convert this from NRRM value to code
-            prd=row['ProjectedRotationDate'] # TODO: find this in NRRM custom reports
+            medical_readiness=convert_medical_readiness(row['Imr Status']), 
+            prd=row['ProjectedRotationDate'] 
         )
         sailors.append(sailor)
     return sailors

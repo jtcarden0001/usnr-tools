@@ -14,7 +14,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DIR_TO_WATCH=${DIR_TO_WATCH}
       - REPORT_FILE_NAME=${REPORT_FILE_NAME}
-      - ARCHIVE_FIR=${ARCHIVE_DIR}
+      - ARCHIVE_DIR=${ARCHIVE_DIR}
     networks:
       - dev_network
     volumes:

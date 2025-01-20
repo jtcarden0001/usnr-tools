@@ -6,5 +6,4 @@ COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN ls -al
-RUN echo $PW
-CMD ["pytest", "app/tests", "-s"]
+CMD ["pytest", "app/tests/app_test.py", "-s"]
