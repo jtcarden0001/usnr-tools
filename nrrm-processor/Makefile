@@ -1,6 +1,6 @@
 # test
 test:
-	docker compose -f ./tools/docker/test.compose.yaml --env-file ./tools/docker/dev.env up --build
+	docker compose -f ./tools/docker/test.compose.yaml --project-name test --env-file ./tools/docker/test.env up --build
 
 test-clean:
 	docker stop test-nrrmprocessor

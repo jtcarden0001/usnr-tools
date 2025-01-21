@@ -4,10 +4,10 @@ services:
   backend:
     build: 
       context: ../../
-      dockerfile: tools/docker/test.Dockerfile
-    container_name: test-nrrmprocessor
+      dockerfile: ${DOCKERFILE}
+    container_name: ${APP_CONTAINER_NAME}
     environment:
-      - DB_HOST=dev-nrrmdata-db
+      - DB_HOST=${DB_CONTAINER_NAME}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER} 
       - DB_PASSWORD=${DB_PASSWORD} 
@@ -16,7 +16,7 @@ services:
       - REPORT_FILE_NAME=${REPORT_FILE_NAME}
       - ARCHIVE_DIR=${ARCHIVE_DIR}
     networks:
-      - dev_network
+      - nrrm_network
     volumes:
       - ../../:/app
     depends_on:
@@ -25,7 +25,7 @@ services:
         restart: true
   db:
     image: postgres:14.13-alpine3.20
-    container_name: dev-nrrmdata-db
+    container_name: ${DB_CONTAINER_NAME}
     expose:
       - "${DB_PORT}"
     environment:
@@ -34,19 +34,19 @@ services:
       - POSTGRES_DB=${DB_NAME} 
       - PGPORT=${DB_PORT}
     volumes: 
-      - dev-db-data:/var/lib/postgresql/data
+      - nrrm_db_data:/var/lib/postgresql/data
       - ../../app/init.sql:/docker-entrypoint-initdb.d/01-init.sql
     networks:
-      - dev_network
+      - nrrm_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d nrrmdata"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${DB_NAME}"]
       interval: 10s
       retries: 5
       start_period: 30s
       timeout: 10s
 
 volumes:
-  dev-db-data:
+  nrrm_db_data:
 
 networks:
-  dev_network:
+  nrrm_network:
