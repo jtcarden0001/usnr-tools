@@ -14,7 +14,7 @@ def test_import_sailors():
     deployability = ['FD', 'PD', 'ND']
 
     sailors = []
-    # create local saßilors
+    # create local sailors
     for i in range(3):
         dodidrand = random.randint(1000000000, 9999999999)
         sailors.append(Sailor(
