@@ -12,9 +12,10 @@ def start():
         file_path = os.path.join(dir_to_watch, file_name)
         # if file does not exist, sleep for 1 minute
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"The file {file_path} does not exist. Current working directory: {os.getcwd()}, contents: {os.listdir()}")
+            if os.getenv('IS_TEST'):
+                raise FileNotFoundError(f"The file {file_path} does not exist.")
+            time.sleep(60)
 
-        
         # if file exists, process the excel file to get the sailors from the excel rows
         sailors = process_report(file_path)
 
@@ -23,15 +24,25 @@ def start():
 
         # move the file to the archive directory
         archive_dir = os.getenv('ARCHIVE_DIR')
+
         # if the archive directory does not exist, create it
-        if not os.path.exists(archive_dir):
+        archive_dir_exists = os.path.exists(archive_dir)
+        if not archive_dir_exists:
             os.mkdir(archive_dir)
+        
+        # archive the file
         timestamp = time.strftime('%Y%m%d%H%M%S')
         archive_file_name = f'{timestamp}_{file_name}'
         archive_file_path = os.path.join(archive_dir, archive_file_name)
         os.rename(file_path, archive_file_path)
-        break # remove this when we want the script to run indefinitely
+        
+        # if this is a test run, undo the file move and break the loop
+        if os.getenv('IS_TEST'):
+            os.rename(archive_file_path, file_path)
+            if not archive_dir_exists:
+                os.rmdir(archive_dir)
 
+            break
 
 def process_report(file_path: str) -> list[Sailor]:
     df = pd.read_excel(file_path)

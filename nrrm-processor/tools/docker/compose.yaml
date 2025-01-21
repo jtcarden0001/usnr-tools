@@ -15,6 +15,7 @@ services:
       - DIR_TO_WATCH=${DIR_TO_WATCH}
       - REPORT_FILE_NAME=${REPORT_FILE_NAME}
       - ARCHIVE_DIR=${ARCHIVE_DIR}
+      - IS_TEST=${IS_TEST}
     networks:
       - nrrm_network
     volumes:
