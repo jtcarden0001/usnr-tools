@@ -4,15 +4,16 @@ from .store import import_sailors  # Replace 'some_module' with the actual modul
 from .models import Sailor
 import pandas as pd
 import openpyxl
+import shutil
 
 def start():
     while True:
-        dir_to_watch = os.getenv('DIR_TO_WATCH')
+        dir_to_watch = '/watch'
         file_name = os.getenv('REPORT_FILE_NAME')
         file_path = os.path.join(dir_to_watch, file_name)
         # if file does not exist, sleep for 1 minute
         if not os.path.exists(file_path):
-            if os.getenv('IS_TEST'):
+            if os.getenv('IS_TEST') == 'true':
                 raise FileNotFoundError(f"The file {file_path} does not exist.")
             time.sleep(60)
 
@@ -23,7 +24,7 @@ def start():
         import_sailors(sailors)
 
         # move the file to the archive directory
-        archive_dir = os.getenv('ARCHIVE_DIR')
+        archive_dir = '/archive'
 
         # if the archive directory does not exist, create it
         archive_dir_exists = os.path.exists(archive_dir)
@@ -34,11 +35,13 @@ def start():
         timestamp = time.strftime('%Y%m%d%H%M%S')
         archive_file_name = f'{timestamp}_{file_name}'
         archive_file_path = os.path.join(archive_dir, archive_file_name)
-        os.rename(file_path, archive_file_path)
+        shutil.copy2(file_path, archive_file_path)
+        os.remove(file_path)
         
         # if this is a test run, undo the file move and break the loop
-        if os.getenv('IS_TEST'):
-            os.rename(archive_file_path, file_path)
+        if os.getenv('IS_TEST') == 'true':
+            shutil.copy2(archive_file_path, file_path)
+            os.remove(archive_file_path)
             if not archive_dir_exists:
                 os.rmdir(archive_dir)
 

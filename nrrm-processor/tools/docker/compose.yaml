@@ -6,6 +6,7 @@ services:
       context: ../../
       dockerfile: ${DOCKERFILE}
     container_name: ${APP_CONTAINER_NAME}
+    command: ${PROCESSOR_COMMAND}
     environment:
       - DB_HOST=${DB_CONTAINER_NAME}
       - DB_PORT=${DB_PORT}
@@ -20,6 +21,8 @@ services:
       - nrrm_network
     volumes:
       - ../../:/app
+      - ${DIR_TO_WATCH}:/watch
+      - ${ARCHIVE_DIR}:/archive
     depends_on:
       db:
         condition: service_healthy
