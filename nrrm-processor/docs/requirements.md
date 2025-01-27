@@ -4,18 +4,19 @@
 
 ### data import
 - be able to download an excel custom nrrm report and provide it as input to the application to store in a db
-  - The report should be able to be variable meaning it might not have all the fields but should be able to update the fields it does have.
+  - The report should be able to be variable meaning it might not have all the fields but should be able to update the fields it does have. ❌ - did not implement - will just depend on report being same every time.
 - process that data against the current data to drive actionable insights
-  - did anything change?  Did we lose a sailor? Did we gain a sailor? Did any sailor fields change?
+  - did anything change? ❌ Did we lose a sailor? ✅ Did we gain a sailor? ✅ Did any sailor fields change? ❌
     - ```DODID```
-- we preserve old data so that we can look at a sailor profile and observe changes over time
+- we preserve old data so that we can look at a sailor profile and observe changes over time ✅
+  - we should only store rows in historical that have changes so the sailor row's are distinct and not noisy with similar rows. ❌
 
 ### Unit Metrics
 
 #### Warfighting Readiness
-- be able to see overrall deployability metrics based on the nrrm individual deployability status broken down by CAI/CAO/Local/IAP`
+- be able to see overrall deployability metrics based on the nrrm individual deployability status broken down by CAI/CAO/Local/IAP 🟡 (only CAI and local, no CAO or IAP - limitation of NRRM custom reports)
   - ```deployability```
-- able to see overrall medical readiness metrics based on the nrrm individual deployability status broken down by CAI/CAO/Local/IAP
+- able to see overrall medical readiness metrics based on the nrrm individual deployability status broken down by CAI/CAO/Local/IAP 🟡 (only CAI and local, no CAO or IAP - limitation of NRRM custom reports)
   - ```medical readiness```
 
 ### Individual Metrics
