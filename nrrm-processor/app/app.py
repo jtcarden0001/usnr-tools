@@ -16,6 +16,7 @@ def start():
             if os.getenv('IS_TEST') == 'true':
                 raise FileNotFoundError(f"The file {file_path} does not exist.")
             time.sleep(60)
+            continue
 
         # if file exists, process the excel file to get the sailors from the excel rows
         sailors = process_report(file_path)
@@ -53,18 +54,23 @@ def process_report(file_path: str) -> list[Sailor]:
     for _, row in df.iterrows():
         sailor = Sailor(
             dodid=row['DoDID'],
-            last_name=row['LastName'],
-            first_name=row['FirstName'],
-            rank=row['RateRank'],
+            last_name=row['LastName'].strip(),
+            first_name=row['FirstName'].strip(),
+            rank=row['RateRank'].strip(),
             truic=row['Truic'],
             umuic=row['Umuic'],
-            deployability=row['Deployability'],
-            medical_readiness=convert_medical_readiness(row['Imr Status']), 
-            prd=row['ProjectedRotationDate'] 
+            deployability=row['Deployability'].strip(),
+            medical_readiness=convert_medical_readiness(row['Imr Status'].strip()), 
+            prd=row['ProjectedRotationDate'].strip(), 
+            phone_number=convert_phone_number(row['HomePhone'].strip()),
+            admin_mas=convert_admin_mas(row['Admin MAS Code'].strip()),
+            medical_mas=convert_medical_mas(row['Medical MAS Code'].strip()),
+            training_mas=convert_training_mas(row['Training MAS Code'].strip())
         )
         sailors.append(sailor)
     return sailors
 
+#region: converters
 def convert_medical_readiness(nrrm_value: str) -> str:
     if nrrm_value == 'Fully Medically Ready':
         return 'FQ'
@@ -75,6 +81,26 @@ def convert_medical_readiness(nrrm_value: str) -> str:
     else:
         return 'Unknown'
 
+def convert_phone_number(phone_number: str) -> str:
+    if phone_number == '--':
+        return None
+    return phone_number
+
+def convert_admin_mas(admin_mas: str) -> str:
+    if admin_mas == '--':
+        return None
+    return admin_mas
+
+def convert_medical_mas(medical_mas: str) -> str:
+    if medical_mas == '--':
+        return None
+    return medical_mas
+
+def convert_training_mas(training_mas: str) -> str:
+    if training_mas == '--':
+        return None
+    return training_mas
+#endregion: converters
 
         
 

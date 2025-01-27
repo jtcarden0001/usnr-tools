@@ -11,6 +11,10 @@ CREATE TABLE sailor_current (
   deployability varchar NOT NULL, -- not normalized
   medical_readiness varchar NOT NULL, -- not normalized
   prd date NOT NULL,
+  phone_number varchar,
+  admin_mas varchar,
+  medical_mas varchar,
+  training_mas varchar,
   PRIMARY KEY (dodid)
 );
 
@@ -26,6 +30,10 @@ CREATE TABLE sailor_historical (
   deployability varchar NOT NULL, -- not normalized
   medical_readiness varchar NOT NULL, -- not normalized
   prd date NOT NULL,
+  phone_number varchar,
+  admin_mas varchar,
+  medical_mas varchar,
+  training_mas varchar,
   PRIMARY KEY (dodid, snapshot_datetime)
 );
 

@@ -69,22 +69,22 @@ def insert_sailors(cur: psycopg.cursor, sailors: list[Sailor]):
     for sailor in sailors_current:
         sailors_current_map[sailor.dodid] = sailor
         cur.execute(
-            'INSERT INTO sailor_historical (dodid, last_name, first_name, rank, truic, umuic, deployability, medical_readiness, prd) '
-            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
-            (sailor.dodid, sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd)
+            'INSERT INTO sailor_historical (dodid, last_name, first_name, rank, truic, umuic, deployability, medical_readiness, prd, phone_number, admin_mas, medical_mas, training_mas) '
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+            (sailor.dodid, sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd, sailor.phone_number, sailor.admin_mas, sailor.medical_mas, sailor.training_mas)
         )
     
     for sailor in sailors:
         if sailor.dodid in sailors_current_map:
             cur.execute(
-                'UPDATE sailor_current SET last_name = %s, first_name = %s, rank = %s, truic = %s, umuic = %s, deployability = %s, medical_readiness = %s, prd = %s WHERE dodid = %s',
-                (sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd, sailor.dodid)
+                'UPDATE sailor_current SET last_name = %s, first_name = %s, rank = %s, truic = %s, umuic = %s, deployability = %s, medical_readiness = %s, prd = %s, phone_number = %s, admin_mas = %s, medical_mas = %s, training_mas = %s WHERE dodid = %s',
+                (sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd, sailor.phone_number, sailor.admin_mas, sailor.medical_mas, sailor.training_mas, sailor.dodid)
             )
         else:
             cur.execute(
-                'INSERT INTO sailor_current (dodid, last_name, first_name, rank, truic, umuic, deployability, medical_readiness, prd) '
-                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                (sailor.dodid, sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd)
+                'INSERT INTO sailor_current (dodid, last_name, first_name, rank, truic, umuic, deployability, medical_readiness, prd, phone_number, admin_mas, medical_mas, training_mas) '
+                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                (sailor.dodid, sailor.last_name, sailor.first_name, sailor.rank, sailor.truic, sailor.umuic, sailor.deployability, sailor.medical_readiness, sailor.prd, sailor.phone_number, sailor.admin_mas, sailor.medical_mas, sailor.training_mas)
             )
     
     # reset the row factory

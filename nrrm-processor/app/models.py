@@ -12,6 +12,10 @@ class Sailor:
     deployability: str
     medical_readiness: str
     prd: str
+    phone_number: str
+    admin_mas: str
+    medical_mas: str
+    training_mas: str
 
 @dataclass
 class SailorHistorical:
@@ -25,6 +29,10 @@ class SailorHistorical:
     deployability: str
     medical_readiness: str
     prd: str
+    phone_number: str
+    admin_mas: str
+    medical_mas: str
+    training_mas: str
 
 @dataclass
 class SailorLoss:
