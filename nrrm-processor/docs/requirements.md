@@ -20,18 +20,18 @@
   - ```medical readiness```
 
 ### Individual Metrics
-- be able to see and individual profile including historical values to identify changes over time.
+- be able to see and individual profile including historical values to identify changes over time. ✅
 
 ### Actions
 - be able to identiy actions based on the data changes
   - did we lose a sailor?  We owe that sailor a transfer eval.  
-    - identified as a pending action item until completed
-  - did a sailor phone number change in nrrm?  We might need to update the recall list
-  - did we gain a sailor?  We owe that sailor a call from our sponsorship coordinator
+    - identified as a pending action item until completed ✅
+  - did a sailor phone number change in nrrm?  We might need to update the recall list ❌ - we will capture it but no notifier yet.
+  - did we gain a sailor?  We owe that sailor a call from our sponsorship coordinator ✅
 
 ### Reporting
 - how do we get these reports and metrics into the hands of decision makers
-  - email report bi-weekly?
+  - email report bi-weekly? ❌
   - last updated date for clarity and emails can run on regular cadence?
     - timestamp on unit-metric-snapshot table
 

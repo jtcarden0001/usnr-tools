@@ -2,6 +2,7 @@ import os
 import time
 from .store import import_sailors  # Replace 'some_module' with the actual module name
 from .models import Sailor
+from .reporter import generate_pdf_report
 import pandas as pd
 import openpyxl
 import shutil
@@ -9,7 +10,7 @@ import shutil
 def start():
     while True:
         dir_to_watch = '/watch'
-        file_name = os.getenv('REPORT_FILE_NAME')
+        file_name = os.getenv('EXCEL_FILE_NAME')
         file_path = os.path.join(dir_to_watch, file_name)
         # if file does not exist, sleep for 1 minute
         if not os.path.exists(file_path):
@@ -38,6 +39,8 @@ def start():
         archive_file_path = os.path.join(archive_dir, archive_file_name)
         shutil.copy2(file_path, archive_file_path)
         os.remove(file_path)
+
+        generate_pdf_report()
         
         # if this is a test run, undo the file move and break the loop
         if os.getenv('IS_TEST') == 'true':

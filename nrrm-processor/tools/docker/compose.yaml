@@ -13,16 +13,18 @@ services:
       - DB_USER=${DB_USER} 
       - DB_PASSWORD=${DB_PASSWORD} 
       - DB_NAME=${DB_NAME}
-      - DIR_TO_WATCH=${DIR_TO_WATCH}
-      - REPORT_FILE_NAME=${REPORT_FILE_NAME}
+      - EXCEL_FILE_NAME=${EXCEL_FILE_NAME}
+      - WATCH_DIR=${WATCH_DIR}
       - ARCHIVE_DIR=${ARCHIVE_DIR}
+      - REPORT_DIR=${REPORT_DIR}
       - IS_TEST=${IS_TEST}
     networks:
       - nrrm_network
     volumes:
       - ../../:/app
-      - ${DIR_TO_WATCH}:/watch
+      - ${WATCH_DIR}:/watch
       - ${ARCHIVE_DIR}:/archive
+      - ${REPORT_DIR}:/report
     depends_on:
       db:
         condition: service_healthy
